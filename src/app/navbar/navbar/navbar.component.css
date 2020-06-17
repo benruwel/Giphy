@@ -1,0 +1,9 @@
+
+.title{
+    color: #1D3557;
+    font-size: 30px;
+}
+.title:hover{
+    color: #A8DADC;
+    cursor: pointer;
+}
