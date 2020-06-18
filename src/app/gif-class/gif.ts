@@ -1,3 +1,10 @@
 export class Gif {
-    constructor (public gifImage : any) {}
+
+    data : {
+        images : {
+          downsized_large : {
+            url : any,
+          }
+        }
+      }
 }

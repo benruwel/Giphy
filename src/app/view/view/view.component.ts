@@ -1,6 +1,7 @@
+import { GiphyRequestService } from './../../giphy-request/giphy-request.service';
 import { Gif } from './../../gif-class/gif';
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-view',
@@ -9,26 +10,19 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ViewComponent implements OnInit {
 
-  gif : Gif;
+  gif$ : Gif[] = []
 
-  constructor(private http : HttpClient) { }
+  constructor(private giphyRequest : GiphyRequestService) { }
+
 
   ngOnInit() {
-    interface ApiResponse{
-      data : {
-        images : {
-          downsized_large : {
-            height: number,
-            size : number,
-            url : any,
-            width : number
-          }
-        }
-      }
-    }
-    this.http.get<ApiResponse>("https://api.giphy.com/v1/gifs/trending?api_key=s6sJ9jn32QZwVOlW2eByB26VMykVaKJv&limit=1&rating=PG").subscribe(res => {
-      this.gif = new Gif(res.data);
-    })
+    return this.giphyRequest.getGifs().subscribe((res) => {
+      this.gif$ = res;
+      console.log('Successful',res)
+    }, (error) => {
+      console.log(error)
+    }) 
+    
   }
 
 }
