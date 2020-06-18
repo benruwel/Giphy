@@ -10,19 +10,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ViewComponent implements OnInit {
 
-  gif$ : Gif[] = []
+  gif$ : Gif;
+  gifs : any = [];
 
-  constructor(private giphyRequest : GiphyRequestService) { }
+  constructor(private giphyRequest : GiphyRequestService) { 
+  }
 
 
   ngOnInit() {
-    return this.giphyRequest.getGifs().subscribe((res) => {
-      this.gif$ = res;
-      console.log('Successful',res)
+    this.showGifs();
+    
+  }
+  showGifs (){
+    return this.giphyRequest.getGifsRequest().subscribe((res) => {
+      this.gifs = res
     }, (error) => {
       console.log(error)
     }) 
-    
   }
 
 }
