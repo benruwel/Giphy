@@ -1,4 +1,4 @@
 export class Gif {
 
-    constructor(private gifUrl : string){}
+    constructor(public gifUrl : string){}
 }

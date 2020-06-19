@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Gif } from '../gif-class/gif';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,17 +17,29 @@ export class GiphyRequestService {
   }
 
   getGifsRequest() {
-    interface APIRespnse {
+    interface APIResponse {
       data : {
         images : {
           down_sized : {
-            url : string
+            url : any
           }
         }
       }
     }
-    
-    return this.http.get<APIRespnse>(this.apiUrl);
+
+    let promise = new Promise((resolve, reject) =>{
+      this.http.get<APIResponse>(this.apiUrl).toPromise().then(response => {
+        this.gif.gifUrl = JSON.parse(response)
+        console.log(response)
+
+        resolve()
+      },
+      error => {
+        reject(error);
+        console.log(error);
+      })
+    })
+    return promise;
   }
 
 }
